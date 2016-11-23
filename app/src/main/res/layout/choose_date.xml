@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/choose__date"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingBottom="1dp"
+    android:paddingLeft="1dp"
+    android:paddingRight="1dp"
+    android:paddingTop="1dp"
+    android:orientation="vertical"
+    tools:context="com.first.miso.choose_date">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight = "0"
+        android:gravity = "center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edit1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="년도 입력" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="년"/>
+
+        <EditText
+            android:id="@+id/edit2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="월을 입력"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="월"/>
+
+        <Button
+            android:id="@+id/bt1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="선택"/>
+
+    </LinearLayout>
+
+
+    <Button
+        android:text="이전"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/date_previouse_button"
+        android:layout_marginStart="18dp"
+        android:layout_alignBaseline="@+id/button5"
+        android:layout_alignBottom="@+id/button5"
+        android:layout_toEndOf="@+id/button5"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+    <Button
+        android:text="Main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/date_main_button"
+        android:layout_marginStart="18dp"
+        android:layout_alignBottom="@+id/date_previouse_button"
+        android:layout_toEndOf="@+id/date_previouse_button"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+    <GridView
+        android:id="@+id/grid1"
+        android:layout_width="fill_parent"
+        android:numColumns="7"
+        android:layout_height="300dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="38dp">
+    </GridView>
+
+    <TextView
+        android:text="입실 : "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/inRoom"
+        android:layout_below="@+id/grid1"
+        android:layout_alignStart="@+id/button5" />
+
+    <TextView
+        android:text="요금 : "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:id="@+id/cost"
+        android:layout_below="@+id/inRoom"
+        android:layout_alignStart="@+id/inRoom" />
+
+    <TextView
+        android:text="인원수 : "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/covers"
+        android:layout_alignTop="@+id/outRoom2"
+        android:layout_alignEnd="@+id/inc"
+        android:layout_marginEnd="9dp" />
+
+    <TextView
+        android:text="~    퇴실 : "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/outRoom"
+        android:layout_alignTop="@+id/inRoom2"
+        android:layout_toEndOf="@+id/button5" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cost2"
+        android:hint="        "
+        android:layout_alignTop="@+id/cost"
+        android:layout_alignStart="@+id/inRoom2"
+        android:layout_alignEnd="@+id/outRoom" />
+
+    <Button
+        android:id="@+id/inc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:text="+"
+        android:layout_alignStart="@+id/date_main_button"
+        android:layout_alignBottom="@+id/cost2"
+        android:textAppearance="@style/TextAppearance.AppCompat" />
+
+    <Button
+        android:text="-"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dec"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_alignBaseline="@+id/inc"
+        android:layout_alignBottom="@+id/inc"
+        android:layout_toEndOf="@+id/inc"
+        android:textAppearance="@style/TextAppearance.AppCompat" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/outRoom2"
+        android:hint="        "
+        android:layout_alignTop="@+id/outRoom"
+        android:layout_toStartOf="@+id/date_main_button" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/covers2"
+        android:hint="0"
+        android:layout_alignTop="@+id/covers"
+        android:layout_toEndOf="@+id/inc"
+        android:layout_marginStart="7dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/inRoom2"
+        android:hint="        "
+        android:layout_alignTop="@+id/inRoom"
+        android:layout_toEndOf="@+id/inRoom" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/res"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:text="계산"
+        android:layout_alignBaseline="@+id/inc"
+        android:layout_alignBottom="@+id/inc"
+        android:layout_alignStart="@+id/outRoom2" />
+
+    <Button
+        android:text="예약"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button5"
+        android:layout_marginStart="32dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:layout_below="@+id/cost2"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>

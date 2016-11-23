@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/payment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.first.miso.payment">
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/paycost"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="23dp"
+        android:id="@+id/banktype" />
+
+    <TextView
+        android:text="결제금액 :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:id="@+id/paycost"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_below="@+id/banktype"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp">
+
+        <TextView
+            android:text="계좌번호 : "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/ll1" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/ll2"
+            android:layout_weight="1"
+            android:inputType="number" />
+
+        <TextView
+            android:text="-"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ll3"
+            android:layout_weight="1" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/ll4"
+            android:layout_weight="1"
+            android:inputType="number" />
+
+        <TextView
+            android:text="-"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ll5"
+            android:layout_weight="1" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/ll6"
+            android:layout_weight="1"
+            android:inputType="number" />
+
+        <TextView
+            android:text="-"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ll7"
+            android:layout_weight="1" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/ll8"
+            android:layout_weight="1"
+            android:inputType="number" />
+    </LinearLayout>
+
+    <Button
+        android:text="결제"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnpay"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="133dp" />
+
+</RelativeLayout>

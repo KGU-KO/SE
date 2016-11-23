@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/choose_skiplace"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.first.miso.choose_skiplace">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="choose the ski site !!"
+        android:textSize="30sp"
+        android:id="@+id/textView"
+
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+
+    <Button
+        android:text="알펜시아스키장"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/skibutton2"
+        android:layout_below="@+id/skibutton1"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="곤지암스키장"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/skibutton1"
+        android:layout_marginTop="14dp"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="덕유산스키장"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/skibutton3"
+        android:layout_below="@+id/skibutton2"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="비발디파크"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/skibutton4"
+        android:layout_below="@+id/skibutton3"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="Undo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="89dp"
+        android:id="@+id/skiplace_undo" />
+
+</RelativeLayout>
+
