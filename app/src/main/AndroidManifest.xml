@@ -22,17 +22,16 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Check_Info"/>
+        <activity android:name=".Check_Use_Money"/>
+        <activity android:name=".Choose_Date"/>
+        <activity android:name=".Choose_Skiplace"/>
         <activity android:name=".MainActivity"/>
-        <activity android:name=".choose_skiplace"/>
-        <activity android:name=".choose_date"/>
-        <activity android:name=".check_info"/>
-        <activity android:name=".check_use_money"/>
-        <activity android:name=".move_ski_site"/>
-        <activity android:name=".reserve_cancel"/>
-        <activity android:name=".withdraw"/>
-        <activity android:name=".withdraw_yes_click"/>
-        <activity android:name=".new_register"/>
-        <activity android:name=".reserve_info"/>
+        <activity android:name=".Move_Ski_Site"/>
+        <activity android:name=".New_Register"/>
+        <activity android:name=".Payment"/>
+        <activity android:name=".Reserve_Cancel"/>
+        <activity android:name=".Reserve_Info"/>
 
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>

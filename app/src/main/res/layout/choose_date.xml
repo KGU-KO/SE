@@ -9,7 +9,8 @@
     android:paddingRight="1dp"
     android:paddingTop="1dp"
     android:orientation="vertical"
-    tools:context="com.first.miso.choose_date">
+    tools:context="com.first.miso.Choose_Date"
+    android:background="@drawable/background">
 
     <LinearLayout
         android:layout_width="fill_parent"

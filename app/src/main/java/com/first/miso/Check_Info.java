@@ -7,17 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import Application.Domain.Reservation;
-
-public class check_info extends AppCompatActivity {
-    final public static int DEFAULT_PORT = 8888;
-    final public static String DEFAULT_IP = "192.168.0.74";
-    //final public static String DEFAULT_IP = "10.0.2.2";
+public class Check_Info extends AppCompatActivity {
 
     int cost;
     String date_in;
@@ -64,52 +58,27 @@ public class check_info extends AppCompatActivity {
         Button paybutton = (Button) findViewById(R.id.paybutton);
         paybutton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Reservation reserve = new Reservation();
-                reserve.setId(id);
-                reserve.setCovers(covers2);
-                reserve.setCost(cost);
-                reserve.setDate_in(date_in);
-                reserve.setDate_out(date_out);
-                reserve.setLocation(location);
-                reserve.setType("reservation");
-                try {
-                    o.writeObject(reserve);
-                    o.flush();
-                    o.close();
-                    socket.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                Intent intent = new Intent(check_info.this, MainActivity.class);
+
+                Intent intent = new Intent(Check_Info.this, Payment.class);
                 intent.putExtra("id", id);
+                intent.putExtra("covers2", covers2);
+                intent.putExtra("date_in", date_in);
+                intent.putExtra("date_out", date_out);
+                intent.putExtra("cost2", cost);
+                intent.putExtra("location", location);
                 finish();
                 startActivity(intent);
             }
         });
+
         //취소하기 버튼 누를때
         Button cancelbutton = (Button) findViewById(R.id.cancelbutton);
         cancelbutton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(check_info.this, MainActivity.class);
+                Intent intent = new Intent(Check_Info.this, MainActivity.class);
                 intent.putExtra("id", id);
                 startActivity(intent);
             }
         });
-
-        Thread worker = new Thread() {
-            public void run() {
-                try {
-                    // 소켓 생성 및 입출력 스트림을 소켓에 연결
-                    //socket = new Socket("10.0.2.2", DEFAULT_PORT);                 // local ip
-                    socket = new Socket(DEFAULT_IP, DEFAULT_PORT);     // remote ip
-                    o = new ObjectOutputStream(socket.getOutputStream());
-                    i = new ObjectInputStream(socket.getInputStream());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        };
-        worker.start();
     }
 }

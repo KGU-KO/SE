@@ -6,13 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class reserve_cancel extends AppCompatActivity {
+public class Reserve_Cancel extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reserve_cancel);
-
 
         // '예약이 취소되었습니다' 문장 출력후 메인버튼누르면 메인으로 돌아가는 이벤트
         Button  go_main_button = (Button) findViewById(R.id. go_main_button);
@@ -21,7 +20,7 @@ public class reserve_cancel extends AppCompatActivity {
 
             public void onClick(View v)
             {
-                Intent intent = new Intent(reserve_cancel.this, MainActivity.class);
+                Intent intent = new Intent(Reserve_Cancel.this, MainActivity.class);
 
                 startActivity(intent);
             }

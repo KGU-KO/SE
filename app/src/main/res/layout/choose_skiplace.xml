@@ -1,71 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:id="@+id/choose_skiplace"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.first.miso.choose_skiplace">
+    tools:context="com.first.miso.Choose_Skiplace"
+    android:weightSum="1"
+    android:background="@drawable/background">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="251dp"
         android:layout_height="wrap_content"
-        android:text="choose the ski site !!"
+        android:text="스키장을 선택하세요!"
         android:textSize="30sp"
         android:id="@+id/textView"
-
+        android:layout_marginLeft="100dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-
-    <Button
-        android:text="알펜시아스키장"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/skibutton2"
-        android:layout_below="@+id/skibutton1"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="곤지암스키장"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/skibutton1"
-        android:layout_marginTop="14dp"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true" />
+        android:layout_height="350dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="125dp"
+            android:layout_height="match_parent"
+            android:weightSum="1">
+
+            <ImageView
+                android:layout_width="95dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/gonziamlogo1"
+                android:id="@+id/imageView5"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp" />
+
+            <Button
+                android:text="곤지암스키장"
+                android:id="@+id/skibutton1"
+                android:layout_below="@+id/textView"
+                android:layout_centerHorizontal="true"
+                android:layout_height="36dp"
+                android:layout_width="78dp"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="monospace" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="113dp"
+                android:layout_height="26dp"></LinearLayout>
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/vivaldipark"
+                android:id="@+id/imageView7"
+                android:layout_weight="0.10" />
+
+            <Button
+                android:text="비발디파크"
+                android:layout_width="wrap_content"
+                android:id="@+id/skibutton4"
+                android:layout_below="@+id/skibutton3"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_weight="0.06"
+                android:fontFamily="monospace"
+                android:layout_marginLeft="10dp"
+                android:layout_height="36dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="126dp"
+            android:layout_height="match_parent"
+            android:weightSum="1">
+
+            <ImageView
+                android:layout_width="105dp"
+                app:srcCompat="@drawable/alpensia1"
+                android:id="@+id/imageView6"
+                android:layout_weight="0.06"
+                android:layout_height="66dp"
+                android:layout_marginTop="20dp" />
+
+            <Button
+                android:text="알펜시아스키장"
+                android:layout_height="36dp"
+                android:id="@+id/skibutton2"
+                android:layout_below="@+id/skibutton1"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="15dp"
+                android:layout_width="78dp"
+                android:fontFamily="monospace" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/dksan"
+                android:id="@+id/imageView8"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp" />
+
+            <Button
+                android:text="덕유산스키장"
+                android:layout_height="36dp"
+                android:id="@+id/skibutton3"
+                android:layout_below="@+id/skibutton2"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="20dp"
+                android:layout_width="76dp"
+                android:fontFamily="monospace" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <Button
-        android:text="덕유산스키장"
+        android:text="뒤로가기"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/skibutton3"
-        android:layout_below="@+id/skibutton2"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="비발디파크"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/skibutton4"
-        android:layout_below="@+id/skibutton3"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="Undo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="89dp"
-        android:id="@+id/skiplace_undo" />
+        android:layout_marginBottom="100dp"
+        android:layout_marginLeft="270dp"
+        android:id="@+id/skiplace_undo"
+        android:layout_height="50dp"
+        android:fontFamily="monospace" />
 
-</RelativeLayout>
-
+</LinearLayout>

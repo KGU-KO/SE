@@ -2,12 +2,14 @@ package com.first.miso;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -19,9 +21,11 @@ import Application.Domain.PaymentInf;
 import Application.Domain.Reservation;
 
 
-public class payment extends AppCompatActivity {
+public class Payment extends AppCompatActivity{
 
-    final public static int DEFAULT_PORT = 8888;
+    final static public int DEFAULT_PORT = LoginActivity.getDefaultPort();
+    final public static String DEFAULT_IP = LoginActivity.getDefaultIP();
+
     private ObjectOutputStream o;
     private ObjectInputStream i;
     private Socket socket;
@@ -33,31 +37,33 @@ public class payment extends AppCompatActivity {
     String id = null;
     String location;
     String accountall;
-    String[] banktype2 = {"신한 은행", "국민 은행", "우리 은행"};
     String selectedbanktype = null;
 
     TextView textpaycost;
     Spinner spinnerbanktype;
-    TextView account1, account2, account3, account4;
+    TextView account1, account2, account3;
     Button btnpayment;
+    RadioGroup bankgroup;
+
+    Handler handler1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.payment);
+        handler1 = new Handler();
 
         textpaycost = (TextView)findViewById(R.id.paycost);
-        spinnerbanktype = (Spinner)findViewById(R.id.banktype);
+        bankgroup = (RadioGroup)findViewById(R.id.bankgroup);
         account1 = (TextView)findViewById(R.id.ll2);
         account2 = (TextView)findViewById(R.id.ll4);
         account3 = (TextView)findViewById(R.id.ll6);
-        account4 = (TextView)findViewById(R.id.ll8);
         btnpayment = (Button)findViewById(R.id.btnpay);
 
         Intent intent = getIntent();
         if(intent != null) {
             id = intent.getStringExtra("id");
-            cost = Integer.parseInt(intent.getStringExtra("cost2"));
+            cost = intent.getIntExtra("cost2", 0);
             date_in = intent.getStringExtra("date_in");
             date_out = intent.getStringExtra("date_out");
             covers2 = intent.getIntExtra("covers2", 0);
@@ -66,18 +72,33 @@ public class payment extends AppCompatActivity {
 
         textpaycost.setText("결제 금액 : "+ cost +"원");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, banktype2);
+        RadioGroup.OnCheckedChangeListener bankcheck=
+                new RadioGroup.OnCheckedChangeListener(){
+                    public void onCheckedChanged(RadioGroup group, int checkedid){
+                        if(group.getId() == R.id.bankgroup) {
+                            switch (checkedid) {
+                                case R.id.sinhan:
+                                    selectedbanktype = "신한은행";
+                                    break;
+                                case R.id.kookmin:
+                                    selectedbanktype = "국민은행";
+                                    break;
+                                case R.id.woori:
+                                    selectedbanktype = "우리은행";
+                                    break;
+                            }
+                        }
+                    }
+                };
 
-        spinnerbanktype.setAdapter(adapter);
+        bankgroup.setOnCheckedChangeListener(bankcheck);
 
         btnpayment.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 ArrayList<Object> paymentlist = new ArrayList<Object>();
 
-                selectedbanktype = spinnerbanktype.getTransitionName();
-                if((account1.getText()!=null)&&(account2.getText()!=null)&&(account2.getText()!=null)&&(account4.getText()!=null)){
-                    accountall = account1.getText()+"-"+account2.getText()+"-"+account3.getText()+"-"+account4.getText();
+                if((account1.getText()!=null)&&(account2.getText()!=null)&&(account2.getText()!=null)){
+                    accountall = account1.getText()+"-"+account2.getText()+"-"+account3.getText();
                 }else{
                     int nevertouch3 = 0;
                 }
@@ -95,21 +116,31 @@ public class payment extends AppCompatActivity {
                 pay.setId(id);
                 pay.setBanktype(selectedbanktype);
                 pay.setAccount(accountall);
+                pay.setCharge(cost);
                 pay.setType("payment");
 
-                paymentlist.add(0, reserve);
-                paymentlist.add(1, pay);
+                paymentlist.add(reserve);
+                paymentlist.add(pay);
 
                 try {
-                    o.writeObject((Object)paymentlist);//무조건 Object형으로 형변환을 해줘야 하는지??
+                    o.writeObject(paymentlist);
                     o.flush();
                     o.close();
+                    i.close();
                     socket.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                Intent intent = new Intent(payment.this, MainActivity.class);
-                intent.putExtra(id,id);
+
+                handler1.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(Payment.this, "결제 성공!!!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                Intent intent = new Intent(Payment.this, MainActivity.class);
+                intent.putExtra("id", id);
                 finish();
                 startActivity(intent);
             }
@@ -119,8 +150,7 @@ public class payment extends AppCompatActivity {
             public void run() {
                 try {
                     // 소켓 생성 및 입출력 스트림을 소켓에 연결
-                    //socket = new Socket("10.0.2.2", DEFAULT_PORT);                 // local ip
-                    socket = new Socket("192.168.1.102", DEFAULT_PORT);     // remote ip
+                    socket = new Socket(DEFAULT_IP, DEFAULT_PORT);     // remote ip
                     o = new ObjectOutputStream(socket.getOutputStream());
                     i = new ObjectInputStream(socket.getInputStream());
                 } catch (IOException e) {

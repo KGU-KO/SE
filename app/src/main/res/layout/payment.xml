@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.first.miso.payment">
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/paycost"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="23dp"
-        android:id="@+id/banktype" />
-
     <TextView
         android:text="결제금액 :"
         android:layout_width="wrap_content"
@@ -23,75 +15,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:layout_below="@+id/banktype"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp">
-
-        <TextView
-            android:text="계좌번호 : "
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/ll1" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:id="@+id/ll2"
-            android:layout_weight="1"
-            android:inputType="number" />
-
-        <TextView
-            android:text="-"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ll3"
-            android:layout_weight="1" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:id="@+id/ll4"
-            android:layout_weight="1"
-            android:inputType="number" />
-
-        <TextView
-            android:text="-"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ll5"
-            android:layout_weight="1" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:id="@+id/ll6"
-            android:layout_weight="1"
-            android:inputType="number" />
-
-        <TextView
-            android:text="-"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ll7"
-            android:layout_weight="1" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:id="@+id/ll8"
-            android:layout_weight="1"
-            android:inputType="number" />
-    </LinearLayout>
-
     <Button
         android:text="결제"
         android:layout_width="wrap_content"
@@ -100,5 +23,88 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="133dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:text="계좌번호 : "
+            android:layout_width="12dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/ll1" />
+
+        <EditText
+            android:layout_width="8dp"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:id="@+id/ll2"
+            android:layout_weight="1"
+            android:inputType="number" />
+
+        <TextView
+            android:text="-"
+            android:layout_width="4dp"
+            android:id="@+id/ll3"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+        <EditText
+            android:layout_width="8dp"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:id="@+id/ll4"
+            android:layout_weight="1"
+            android:inputType="number" />
+
+        <TextView
+            android:text="-"
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            android:id="@+id/ll5"
+            android:layout_weight="1" />
+
+        <EditText
+            android:layout_width="8dp"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:id="@+id/ll6"
+            android:layout_weight="1"
+            android:inputType="number" />
+
+    </LinearLayout>
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
+        android:layout_below="@+id/paycost"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/bankgroup">
+
+        <RadioButton
+            android:text="신한은행"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sinhan"
+            android:layout_weight="1" />
+
+        <RadioButton
+            android:text="국민은행"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/kookmin" />
+
+        <RadioButton
+            android:text="우리은행"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/woori"
+            android:layout_weight="1" />
+    </RadioGroup>
 
 </RelativeLayout>

@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Reservation implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private int number;
     private String id;
     private int covers;
     private int cost;
@@ -13,12 +14,12 @@ public class Reservation implements Serializable {
     private String location;
     private String type;
 
-    public int getCovers() {
-        return covers;
+    public int getNumber() {
+        return number;
     }
 
-    public void setCovers(int covers) {
-        this.covers = covers;
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public String getId() {
@@ -27,6 +28,14 @@ public class Reservation implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getCovers() {
+        return covers;
+    }
+
+    public void setCovers(int covers) {
+        this.covers = covers;
     }
 
     public int getCost() {

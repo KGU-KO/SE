@@ -2,26 +2,27 @@ package com.first.miso;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
 import Application.Domain.Reservation;
 
-public class reserve_info extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class Reserve_Info extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    final public static int DEFAULT_PORT = 8888;
-    //final public static String DEFAULT_IP = "192.168.0.74";
-    final public static String DEFAULT_IP = "10.0.2.2";
+    final static public int DEFAULT_PORT = LoginActivity.getDefaultPort();
+    final public static String DEFAULT_IP = LoginActivity.getDefaultIP();
 
     private ObjectOutputStream o;
     private ObjectInputStream i;
@@ -38,23 +39,27 @@ public class reserve_info extends AppCompatActivity implements AdapterView.OnIte
     ListView listView;
     Button btnDeleteReserve;
 
+    Handler handler1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reserve_info);
+        handler1 = new Handler();
 
         Intent intent = getIntent();
         if(intent != null) {
             id = intent.getStringExtra("id");
             listCount = intent.getIntExtra("listCount", 0);
 
-            for(int i=0 ; i<listCount ; i++) {
+            for(int index=0 ; index<listCount ; index++) {
                 Reservation reserve = new Reservation();
-                reserve.setCovers(intent.getIntExtra("covers"+i, 0));
-                reserve.setCost(intent.getIntExtra("cost"+i, 0));
-                reserve.setDate_in(intent.getStringExtra("date_in"+i));
-                reserve.setDate_out(intent.getStringExtra("date_out"+i));
-                reserve.setLocation(intent.getStringExtra("location"+i));
+                reserve.setNumber(intent.getIntExtra("number"+index, 0));
+                reserve.setCovers(intent.getIntExtra("covers"+index, 0));
+                reserve.setCost(intent.getIntExtra("cost"+index, 0));
+                reserve.setDate_in(intent.getStringExtra("date_in"+index));
+                reserve.setDate_out(intent.getStringExtra("date_out"+index));
+                reserve.setLocation(intent.getStringExtra("location"+index));
                 reservationList.add(reserve);
             }
         }
@@ -72,17 +77,25 @@ public class reserve_info extends AppCompatActivity implements AdapterView.OnIte
 
         btnDeleteReserve.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+                handler1.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(Reserve_Info.this, "예약 취소 성공!!!", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
                 try {
+                    reservationList.get(selectedIndex).setId(id);
                     reservationList.get(selectedIndex).setType("reservation_delete");
                     o.writeObject(reservationList.get(selectedIndex));
                     o.flush();
                     o.close();
+                    i.close();
                     socket.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                Intent intent = new Intent(reserve_info.this, MainActivity.class);
+                Intent intent = new Intent(Reserve_Info.this, MainActivity.class);
                 intent.putExtra("id", id);
                 finish();
                 startActivity(intent);
@@ -93,7 +106,6 @@ public class reserve_info extends AppCompatActivity implements AdapterView.OnIte
             public void run() {
                 try {
                     // 소켓 생성 및 입출력 스트림을 소켓에 연결
-                    //socket = new Socket("10.0.2.2", DEFAULT_PORT);                 // local ip
                     socket = new Socket(DEFAULT_IP, DEFAULT_PORT);     // remote ip
                     o = new ObjectOutputStream(socket.getOutputStream());
                     i = new ObjectInputStream(socket.getInputStream());
@@ -116,10 +128,9 @@ public class reserve_info extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         if(mItems.get(i).equals("")) {
-            selectedIndex = i;
         }
         else {
-            int nevertouch7 = 0;
+            selectedIndex = i;
         }
     }
 }

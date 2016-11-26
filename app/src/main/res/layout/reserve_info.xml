@@ -4,7 +4,8 @@
     android:id="@+id/check_info"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.first.miso.check_info">
+    tools:context="com.first.miso.Check_Info"
+    android:background="@drawable/background">
 
 
     <ListView

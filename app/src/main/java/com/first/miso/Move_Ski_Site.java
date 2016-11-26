@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class move_ski_site extends AppCompatActivity {
+public class Move_Ski_Site extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class move_ski_site extends AppCompatActivity {
         move_undo.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 finish();
-                Intent intent = new Intent(move_ski_site.this, MainActivity.class); //이 빨간 부분에 결제화면 액티비티 이름 넣어주기!
+                Intent intent = new Intent(Move_Ski_Site.this, MainActivity.class); //이 빨간 부분에 결제화면 액티비티 이름 넣어주기!
                 startActivity(intent);
             }
         });

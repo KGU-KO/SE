@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -21,8 +22,7 @@ import Application.Domain.User;
 
 public class LoginActivity extends Activity {
     final public static int DEFAULT_PORT = 8888;
-    final public static String DEFAULT_IP = "192.168.0.74";
-    //final public static String DEFAULT_IP = "10.0.2.2";
+    final public static String DEFAULT_IP = "192.168.35.240";  // 로컬 아이피 "10.0.2.2"
 
     private Socket socket;
     EditText id, pwd;
@@ -37,7 +37,16 @@ public class LoginActivity extends Activity {
     String newRegister = "@";
     Object read = null;
 
-    Handler d = null;
+    Handler handler1 = null;
+    Handler handler2 = null;
+
+    public static int getDefaultPort () {
+        return DEFAULT_PORT;
+    }
+
+    public static String getDefaultIP () {
+        return DEFAULT_IP;
+    }
 
     //어플 시작시  초기화설정
     @Override
@@ -50,7 +59,8 @@ public class LoginActivity extends Activity {
         loginButton = (Button) findViewById(R.id.loginButton);          // 로그인 버튼을 찾는다.
         signUpButton = (Button) findViewById(R.id.signUpButton);    // 회원가입 버튼을 찾는다.
         exitButton = (Button) findViewById(R.id.exitButton);        // 종료 버튼을 찾는다.
-        d = new Handler();
+        handler1 = new Handler();
+        handler2 = new Handler();
 
 
         exitButton.setOnClickListener(new OnClickListener() {
@@ -98,25 +108,21 @@ public class LoginActivity extends Activity {
                     i.close();
                     o.close();
                     socket.close();
-                    finish();
                 } catch (IOException e) {
                     Log.e("writeObject error: ", e.toString());
                 }
 
-                Intent intent = new Intent(LoginActivity.this, new_register.class);
+                Intent intent = new Intent(LoginActivity.this, New_Register.class);
+                finish();
                 startActivity(intent);
             }
         });
 
         Thread worker = new Thread() {
-
             public void run() {
-                //Looper.prepare();
-
                 try {
                     // 소켓 생성 및 입출력 스트림을 소켓에 연결
-                    //socket = new Socket("10.0.2.2", DEFAULT_PORT);                 // local ip
-                    socket = new Socket(DEFAULT_IP, DEFAULT_PORT);     // remote ip
+                    socket = new Socket(DEFAULT_IP, DEFAULT_PORT);
                     o = new ObjectOutputStream(socket.getOutputStream());
                     i = new ObjectInputStream(socket.getInputStream());
 
@@ -126,15 +132,19 @@ public class LoginActivity extends Activity {
 
                 try {
                     while (true) {
-                        //result = (int)i.readObject();
                         if(socket != null && !socket.isClosed()) {
                             read = i.readObject();
                         }
                         else {
                             break;
                         }
-
                         if(read.toString().equals(success)) {
+                            handler1.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(LoginActivity.this, "로그인 성공!!!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                             i.close();
                             o.close();
                             socket.close();
@@ -142,13 +152,13 @@ public class LoginActivity extends Activity {
                             intent.putExtra("id", user.getId());
                             finish();
                             startActivity(intent);
+                            break;
                         }
 
                         else if(read.toString().equals(miss)) {
-                            d.post(new Runnable() {
+                            handler2.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    //Log.w("MISS TYPE", " " + result);
                                     AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
                                     alert.setTitle("ID/PASSWORD 에러");
                                     alert.setMessage("다시 입력하세요!!");
@@ -166,7 +176,6 @@ public class LoginActivity extends Activity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                //Looper.loop();
             }
 
         };

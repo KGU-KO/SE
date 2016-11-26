@@ -1,9 +1,10 @@
 package com.first.miso;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -21,24 +22,24 @@ public class MainActivity extends AppCompatActivity {
 
     String id = null;
 
-    final public static int DEFAULT_PORT = 8888;
-    //final public static String DEFAULT_IP = "192.168.0.74";
-    final public static String DEFAULT_IP = "10.0.2.2";
+    final static public int DEFAULT_PORT = LoginActivity.getDefaultPort();
+    final public static String DEFAULT_IP = LoginActivity.getDefaultIP();
 
     private ObjectOutputStream o;
     private ObjectInputStream i;
     private Socket socket;
     Object read = null;
     String reserve_check = "(";
-    String success = "$";
-    String miss = "#";
-    String close = "`";
-    Handler handler = null;
+    String withdraw = ")";
+    Handler handler1 = null;
+    Handler handler2 = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        handler1 = new Handler();
+        handler2 = new Handler();
 
         Intent intent = getIntent();
         if(intent != null) {
@@ -54,8 +55,9 @@ public class MainActivity extends AppCompatActivity {
         {
             public void onClick(View v) {
                 //Log.i("USER ID", id);
-                Intent intent = new Intent(MainActivity.this, choose_skiplace.class);
+                Intent intent = new Intent(MainActivity.this, Choose_Skiplace.class);
                 intent.putExtra("id", id);
+                finish();
                 startActivity(intent);
             }
         });
@@ -88,8 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
             public void onClick(View v)
             {
-                Intent intent = new Intent(MainActivity.this, check_use_money.class);
-
+                Intent intent = new Intent(MainActivity.this, Check_Use_Money.class);
                 startActivity(intent);
             }
         });
@@ -101,22 +102,50 @@ public class MainActivity extends AppCompatActivity {
 
             public void onClick(View v)
             {
-                Intent intent = new Intent(MainActivity.this, move_ski_site.class);
-
+                Intent intent = new Intent(MainActivity.this, Move_Ski_Site.class);
                 startActivity(intent);
             }
         });
 
         //탈퇴하기 버튼 누를떄 액션
         Button button5 = (Button) findViewById(R.id.button5);
-        button5.setOnClickListener(new View.OnClickListener()
-        {
+        button5.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                handler2.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                        alert.setTitle("회원 탈퇴");
+                        alert.setMessage("탈퇴하시겠습니까?");
 
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(MainActivity.this, withdraw.class);
+                        alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
 
-                startActivity(intent);
+                        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try {
+                                    o.writeObject(withdraw + id);
+                                    o.flush();
+                                    i.close();
+                                    o.close();
+                                    socket.close();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                dialog.cancel();
+                                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                                finish();
+                                startActivity(intent);
+                            }
+                        });
+                        alert.show();
+                    }
+                });
             }
         });
 
@@ -124,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 try {
                     // 소켓 생성 및 입출력 스트림을 소켓에 연결
-                    //socket = new Socket("10.0.2.2", DEFAULT_PORT);                 // local ip
                     socket = new Socket(DEFAULT_IP, DEFAULT_PORT);     // remote ip
                     o = new ObjectOutputStream(socket.getOutputStream());
                     i = new ObjectInputStream(socket.getInputStream());
@@ -143,11 +171,12 @@ public class MainActivity extends AppCompatActivity {
 
                         if(reservationList.get(0).getType().equals("success")) {
 
-                            Intent intent = new Intent(MainActivity.this, reserve_info.class);
+                            Intent intent = new Intent(MainActivity.this, Reserve_Info.class);
                             intent.putExtra("listCount", reservationList.size());
                             intent.putExtra("id", id);
 
                             for(int i=0 ; i<reservationList.size() ; i++) {
+                                intent.putExtra("number"+i, reservationList.get(i).getNumber());
                                 intent.putExtra("covers"+i, reservationList.get(i).getCovers());
                                 intent.putExtra("cost"+i, reservationList.get(i).getCost());
                                 intent.putExtra("date_in"+i, reservationList.get(i).getDate_in());
@@ -164,27 +193,15 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         }
 
+                        // 토스트 수정!!!
                         else if (reservationList.get(0).getType().equals("fail")) {
-                            Looper.prepare();
-                            handler.post(new Runnable() {
+                            handler1.post(new Runnable() {
                                 @Override
                                 public void run() {
                                     Toast toast = Toast.makeText(MainActivity.this, "예약정보가 없습니다!!!", Toast.LENGTH_SHORT);
                                     toast.show();
                                 }
                             });
-                            Looper.loop();
-                            //Toast toast = Toast.makeText(MainActivity.this, "예약정보가 없습니다!!!", Toast.LENGTH_SHORT);
-                            //toast.show();
-                            Intent intent = new Intent(MainActivity.this, choose_date.class);
-                            intent.putExtra("id", id);
-                            o.flush();
-                            o.close();
-                            i.close();
-                            socket.close();
-                            startActivity(intent);
-                            finish();
-                            break;
                         }
                     }
                 } catch (Exception e) {

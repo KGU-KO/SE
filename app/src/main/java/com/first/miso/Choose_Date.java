@@ -13,18 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Date;
 
-//import com.google.android.gms.appindexing.Action;
-//import com.google.android.gms.appindexing.AppIndex;
-//import com.google.android.gms.appindexing.Thing;
-//import com.google.android.gms.common.api.GoogleApiClient;
-
-public class choose_date extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    // private GoogleApiClient client;
+public class Choose_Date extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     ArrayList<String> mItems;
     ArrayAdapter<String> adapter;
@@ -125,7 +114,7 @@ public class choose_date extends AppCompatActivity implements AdapterView.OnItem
         Button button5 = (Button) findViewById(R.id.button5);
         button5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(choose_date.this, check_info.class);
+                Intent intent = new Intent(Choose_Date.this, Check_Info.class);
                 intent.putExtra("id", id);
                 intent.putExtra("covers2", covers2);
                 intent.putExtra("date_in", date_in);
@@ -143,7 +132,7 @@ public class choose_date extends AppCompatActivity implements AdapterView.OnItem
 
             public void onClick(View v)
             {
-                Intent intent = new Intent(choose_date.this, choose_skiplace.class); //이 빨간 부분에 결제화면 액티비티 이름 넣어주기!
+                Intent intent = new Intent(Choose_Date.this, Choose_Skiplace.class); //이 빨간 부분에 결제화면 액티비티 이름 넣어주기!
 
                 startActivity(intent);
             }
@@ -155,7 +144,7 @@ public class choose_date extends AppCompatActivity implements AdapterView.OnItem
         Button date_main_button = (Button) findViewById(R.id.date_main_button);
         date_main_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(choose_date.this, MainActivity.class); //이 빨간 부분에 결제화면 액티비티 이름 넣어주기!
+                Intent intent = new Intent(Choose_Date.this, MainActivity.class); //이 빨간 부분에 결제화면 액티비티 이름 넣어주기!
 
                 startActivity(intent);
             }

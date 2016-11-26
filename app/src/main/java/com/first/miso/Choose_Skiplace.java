@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class choose_skiplace extends AppCompatActivity {
+public class Choose_Skiplace extends AppCompatActivity {
     String id = null;
 
     @Override
@@ -27,7 +27,7 @@ public class choose_skiplace extends AppCompatActivity {
 
             public void onClick(View v)
             {
-                Intent intent = new Intent(choose_skiplace.this, choose_date.class);
+                Intent intent = new Intent(Choose_Skiplace.this, Choose_Date.class);
                 intent.putExtra("id", id);
                 intent.putExtra("location", "곤지암");
                 startActivity(intent);
@@ -41,7 +41,7 @@ public class choose_skiplace extends AppCompatActivity {
 
             public void onClick(View v)
             {
-                Intent intent = new Intent(choose_skiplace.this, choose_date.class);
+                Intent intent = new Intent(Choose_Skiplace.this, Choose_Date.class);
                 intent.putExtra("id", id);
                 intent.putExtra("location", "알펜시아");
                 startActivity(intent);
@@ -55,7 +55,7 @@ public class choose_skiplace extends AppCompatActivity {
 
             public void onClick(View v)
             {
-                Intent intent = new Intent(choose_skiplace.this, choose_date.class);
+                Intent intent = new Intent(Choose_Skiplace.this, Choose_Date.class);
                 intent.putExtra("id", id);
                 intent.putExtra("location", "덕유산");
                 startActivity(intent);
@@ -70,7 +70,7 @@ public class choose_skiplace extends AppCompatActivity {
 
             public void onClick(View v)
             {
-                Intent intent = new Intent(choose_skiplace.this,choose_date.class);
+                Intent intent = new Intent(Choose_Skiplace.this,Choose_Date.class);
                 intent.putExtra("id", id);
                 intent.putExtra("location", "비발디");
                 startActivity(intent);
@@ -83,7 +83,7 @@ public class choose_skiplace extends AppCompatActivity {
         Button skiplace_button = (Button) findViewById(R.id.skiplace_undo);
         skiplace_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(choose_skiplace.this, MainActivity.class); //이 빨간 부분에 결제화면 액티비티 이름 넣어주기!
+                Intent intent = new Intent(Choose_Skiplace.this, MainActivity.class); //이 빨간 부분에 결제화면 액티비티 이름 넣어주기!
                 intent.putExtra("id", id);
                 startActivity(intent);
             }

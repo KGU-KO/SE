@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -17,11 +18,10 @@ import java.net.Socket;
 
 import Application.Domain.User;
 
-public class new_register extends AppCompatActivity {
+public class New_Register extends AppCompatActivity {
 
-    final public static int DEFAULT_PORT = 8888;
-    //final public static String DEFAULT_IP = "192.168.0.74";
-    final public static String DEFAULT_IP = "10.0.2.2";
+    final static public int DEFAULT_PORT = LoginActivity.getDefaultPort();
+    final public static String DEFAULT_IP = LoginActivity.getDefaultIP();
 
     private Socket socket;
     private ObjectOutputStream o;
@@ -29,7 +29,7 @@ public class new_register extends AppCompatActivity {
     EditText name, phone, id, pwd;
     Object read;
     String newRegisterFail = "%", newRegisterSuccess = "^";
-    Handler d;
+    Handler handler1, handler2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,8 @@ public class new_register extends AppCompatActivity {
         phone = (EditText) findViewById(R.id.phone_input);
         id = (EditText) findViewById(R.id.id_input);
         pwd = (EditText) findViewById(R.id.pwd_input);
-        d = new Handler();
+        handler1 = new Handler();
+        handler2 = new Handler();
 
         Button register_make_button= (Button) findViewById(R.id. register_make_button);
         register_make_button.setOnClickListener(new View.OnClickListener() {
@@ -71,14 +72,16 @@ public class new_register extends AppCompatActivity {
                 newUser.setType("signUp");
 
                 try {
-                    o.writeObject((Object)newUser);
+                    o.writeObject(newUser);
                     o.flush();
+                    o.close();
+                    i.close();
                     socket.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                Intent intent = new Intent(New_Register.this, LoginActivity.class);
                 finish();
-                Intent intent = new Intent(new_register.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -86,12 +89,10 @@ public class new_register extends AppCompatActivity {
         Thread worker = new Thread() {
 
             public void run() {
-                //Looper.prepare();
 
                 try {
                     // 소켓 생성 및 입출력 스트림을 소켓에 연결
-                    //socket = new Socket("10.0.2.2", DEFAULT_PORT);      // local ip
-                    socket = new Socket(DEFAULT_IP, DEFAULT_PORT);     // remote ip
+                    socket = new Socket(DEFAULT_IP, DEFAULT_PORT);
                     o = new ObjectOutputStream(socket.getOutputStream());
                     i = new ObjectInputStream(socket.getInputStream());
 
@@ -109,11 +110,10 @@ public class new_register extends AppCompatActivity {
                         }
 
                         if(read.toString().equals(newRegisterFail)) {
-                            d.post(new Runnable() {
+                            handler1.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    //Log.w("MISS TYPE", " " + result);
-                                    AlertDialog.Builder alert = new AlertDialog.Builder(new_register.this);
+                                    AlertDialog.Builder alert = new AlertDialog.Builder(New_Register.this);
                                     alert.setTitle("회원가입 에러");
                                     alert.setMessage("아이디가 중복됩니다!!");
                                     alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -128,14 +128,20 @@ public class new_register extends AppCompatActivity {
                         }
 
                         else if(read.toString().equals(newRegisterSuccess)) {
+                            handler2.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(New_Register.this, "회원가입 성공!!!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
                             o.close();
                             i.close();
                             socket.close();
 
+                            Intent intent = new Intent(New_Register.this, LoginActivity.class);
                             finish();
-                            Intent intent = new Intent(new_register.this, LoginActivity.class);
                             startActivity(intent);
-
                             break;
                         }
                     }

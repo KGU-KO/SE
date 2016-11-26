@@ -8,6 +8,7 @@ public class PaymentInf implements Serializable {
     private String id;
     private String banktype;
     private String account;
+    private int charge;
     private String type;
 
     public String getId(){
@@ -40,5 +41,13 @@ public class PaymentInf implements Serializable {
 
     public void setType(String type){
         this.type = type;
+    }
+
+    public int getCharge() {
+        return charge;
+    }
+
+    public void setCharge(int charge) {
+        this.charge = charge;
     }
 }

@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class check_use_money extends AppCompatActivity {
+public class Check_Use_Money extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class check_use_money extends AppCompatActivity {
         usemoney_main.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 finish();
-                Intent intent = new Intent(check_use_money.this, MainActivity.class);
+                Intent intent = new Intent(Check_Use_Money.this, MainActivity.class);
                 startActivity(intent);
             }
         });
